@@ -246,6 +246,11 @@ body{margin:0;background:var(--bg);color:#111;line-height:1.4}
 .video-card img{width:100%;display:block}
 .play{background:rgba(255,69,58,0.95);border:none;color:#fff;padding:.5rem 1rem;border-radius:6px}
 
+/* YouTube carousel fixes */
+.youtube-track{gap:0;padding-bottom:1rem}
+.youtube-track .youtube-card{display:block;position:relative;border-radius:18px;overflow:hidden;height:0;padding-bottom:56.25%;min-height:240px;box-shadow:0 14px 40px rgba(11,15,21,0.08)}
+.youtube-track .youtube-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
 /* Process box */
 .process-box{height:220px;background:linear-gradient(180deg,#fff,#fbfdfb);border-radius:8px}
 
