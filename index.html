@@ -593,86 +593,16 @@
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-3xl font-bold text-gray-900">Testimonials</h2>
                 
-                <!-- Navigation Icons (Top Right Placement) -->
-                <div class="flex space-x-3">
-                    <button onclick="prevSlide(2)" class="p-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-200 transition duration-150 shadow-md" aria-label="Previous Testimonial">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                    </button>
-                    <button onclick="nextSlide2()" class="p-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-200 transition duration-150 shadow-md" aria-label="Next Testimonial">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </button>
-                </div>
             </div>
 
-            <!-- Carousel Area -->
-            <div class="relative overflow-hidden">
-                <!-- Carousel Track - uses Flexbox to hold all cards horizontally. The transform is updated by JS -->
-                <div id="youtube-track" class="flex transition-transform duration-500 ease-in-out youtube-track">
-                    
-                    <!-- 8 Testimonial Cards (Task 2: Responsive Widths) -->
-                    <!-- w-full for 1 card view on mobile, lg:w-1/4 for 4 cards view on desktop -->
-                        <div class="w-1/3 flex-shrink-0 p-3">
-                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 youtube-card" aria-label="Watch video: Company Culture">
-                                <img src="https://placehold.co/600x400/3E437D/ffffff?text=Video+Thumbnail+1" alt="People gathering, representing company culture." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/3E437D/ffffff?text=Video+1';" />
-                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
-                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
-                                </div>
-                            </a>
-                        </div>
-                         <div class="w-1/3 flex-shrink-0 p-3">
-                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 youtube-card" aria-label="Watch video: Product Demo">
-                                <img src="https://placehold.co/600x400/429255/ffffff?text=Video+Thumbnail+2" alt="Product demonstration in a modern setting." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/429255/ffffff?text=Video+2';" />
-                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
-                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
-                                </div>
-                            </a>
-                        </div>
-                         <div class="w-1/3 flex-shrink-0 p-3">
-                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 youtube-card" aria-label="Watch video: Client Success Story">
-                                <img src="https://placehold.co/600x400/3E437D/ffffff?text=Video+Thumbnail+3" alt="Client discussing success over coffee." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/3E437D/ffffff?text=Video+3';" />
-                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
-                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="w-1/3 flex-shrink-0 p-3">
-                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300" aria-label="Watch video: Client Success Story">
-                                <img src="https://placehold.co/600x400/3E437D/ffffff?text=Video+Thumbnail+3" alt="Client discussing success over coffee." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/3E437D/ffffff?text=Video+3';" />
-                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
-                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="w-1/3 flex-shrink-0 p-3">
-                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300" aria-label="Watch video: Client Success Story">
-                                <img src="https://placehold.co/600x400/3E437D/ffffff?text=Video+Thumbnail+3" alt="Client discussing success over coffee." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/3E437D/ffffff?text=Video+3';" />
-                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
-                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="w-1/3 flex-shrink-0 p-3">
-                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300" aria-label="Watch video: Client Success Story">
-                                <img src="https://placehold.co/600x400/3E437D/ffffff?text=Video+Thumbnail+3" alt="Client discussing success over coffee." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/3E437D/ffffff?text=Video+3';" />
-                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
-                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="w-1/3 flex-shrink-0 p-3">
-                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300" aria-label="Watch video: Client Success Story">
-                                <img src="https://placehold.co/600x400/3E437D/ffffff?text=Video+Thumbnail+3" alt="Client discussing success over coffee." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/3E437D/ffffff?text=Video+3';" />
-                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
-                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
-                                </div>
-                            </a>
-                        </div>
-
+            <!-- Focused YouTube Testimonial -->
+            <div class="mt-10">
+                <div class="relative w-full max-w-4xl mx-auto" style="padding-top:56.25%;">
+                    <iframe class="absolute inset-0 w-full h-full rounded-2xl shadow-2xl border border-white/40" src="https://www.youtube.com/embed/disX0iWv7H0" title="Customer testimonial" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
+                <p class="mt-4 text-center text-gray-600 max-w-2xl mx-auto">
+                    Hear from our partners why the experience of working with us feels more like a collaboration than a contract.
+                </p>
             </div>
         </section>    
        
