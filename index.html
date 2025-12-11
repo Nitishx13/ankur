@@ -485,10 +485,10 @@
                 
                 <!-- Navigation Icons (Top Right Placement) -->
                 <div class="flex space-x-3">
-                    <button onclick="prevSlide()" class="p-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-200 transition duration-150 shadow-md" aria-label="Previous Testimonial">
+                    <button onclick="prevSlide(2)" class="p-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-200 transition duration-150 shadow-md" aria-label="Previous Testimonial">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     </button>
-                    <button onclick="nextSlide()" class="p-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-200 transition duration-150 shadow-md" aria-label="Next Testimonial">
+                    <button onclick="nextSlide2()" class="p-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-200 transition duration-150 shadow-md" aria-label="Next Testimonial">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </button>
                 </div>
@@ -496,7 +496,6 @@
 
             <!-- Carousel Area -->
             <div class="relative overflow-hidden">
-                <!-- Carousel Track - uses Flexbox to hold all cards horizontally. The transform is updated by JS -->
                 <div id="testimonial-track" class="flex transition-transform duration-500 ease-in-out">
                     
                     <!-- 8 Testimonial Cards (Task 2: Responsive Widths) -->
