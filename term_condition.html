@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- WCAG/GIGW Compliance: Set language and viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - Explore Co.</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Icon Libraries (Phosphor Icons for modern look) -->
+    <script src="https://unpkg.com/phosphor-icons"></script>
+    
+    <!-- Custom Configuration and Styles -->
+    <style>
+        /* FONT IMPORT & ROOT VARIABLES */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+        
+        :root {
+            --color-primary: #429255;
+            --color-menu-text: #3E437D;
+            --font-size-body: 16px;
+            --font-size-menu: 16px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: var(--font-size-body); /* 16px base font size */
+            color: #333;
+        }
+
+        /* Default H-tags inherit from body, using responsive Tailwind classes overrides this */
+        h1, h2, h3 {
+            font-weight: 700;
+        }
+        
+        /* Custom utility for menu text color and size */
+        .menu-text-style {
+            color: var(--color-menu-text);
+            font-size: var(--font-size-menu); /* 16px */
+            font-weight: 500;
+        }
+        
+        /* Custom utility for primary button background */
+        .btn-primary {
+            background-color: var(--color-primary);
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #387c4a; /* Slightly darker green on hover */
+        }
+
+        /* Off-canvas menu transition */
+        .drawer-transition {
+            transition: transform 0.3s ease-out;
+        }
+
+        /* --- DESKTOP Dropdown Visibility (Hover/Focus-Within) --- */
+        .dropdown-desktop:hover .dropdown-menu,
+        .dropdown-desktop:focus-within .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .sub-dropdown-desktop:hover .sub-dropdown-menu,
+        .sub-dropdown-desktop:focus-within .sub-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+        
+        /* --- MOBILE Dropdown Styling --- */
+        .dropdown-mobile-content {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease-out;
+        }
+        .dropdown-mobile-content.open {
+            max-height: 500px; /* Large enough to accommodate content */
+        }
+        .dropdown-mobile-toggle i {
+            transition: transform 0.3s ease-out;
+        }
+        .dropdown-mobile-toggle.open i {
+            transform: rotate(180deg);
+        }
+
+        /* Custom Sticky Table of Contents (ToC) for Desktop */
+        .sticky-toc {
+            top: 6rem; /* Adjust based on header height (h-20 is 5rem, plus margin) */
+        }
+
+    </style>
+
+    <!-- Tailwind Config for custom colors and screen breakpoints -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-action': '#429255',
+                        'menu-text': '#3E437D',
+                        'footer-bg': '#2E354F',
+                        'hero-bg': '#F4FFF4',
+                    },
+                    screens: {
+                        'lg': '1024px', /* Specific breakpoint for desktop menu */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="overflow-x-hidden antialiased">
+
+     <!-- Header & Desktop Navigation (LG and up) -->
+    <header class="sticky top-0 z-40 bg-white shadow-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="text-3xl font-bold text-primary-action" aria-label="Explore Home">
+                   <img src="./assets/img/logo.png" alt="" srcset="" width="150" height="50"/>
+                </a>
+
+                <!-- Desktop Menu (Hidden on mobile/tablet) -->
+                <nav class="hidden lg:flex items-center lg:space-x-8" aria-label="Main Navigation">
+                    <a href="index.html" class="menu-text-style text-primary-action font-bold transition duration-150" role="menuitem">Home</a>
+                    <a href="service.html" class="menu-text-style hover:text-primary-action transition duration-150" role="menuitem">Services</a>
+                    <a href="product.html" class="menu-text-style hover:text-primary-action transition duration-150" role="menuitem">Products</a>
+                    
+                    <!-- Services Dropdown (Desktop) -->
+                    <!-- <div class="relative dropdown-desktop">
+                        <button class="menu-text-style flex items-center hover:text-primary-action transition duration-150 py-2" aria-expanded="false" aria-controls="services-menu" aria-haspopup="true">
+                            Services <i class="ph ph-caret-down ml-1 text-base"></i>
+                        </button>
+                        <div id="services-menu" class="dropdown-menu absolute left-0 mt-0 w-48 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 invisible transition duration-300 transform scale-95 origin-top-left z-50" role="menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Consulting</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Development</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Design</a>
+                        </div>
+                    </div> -->
+
+                    <!-- Products Dropdown (Desktop) -->
+                    <!-- <div class="relative dropdown-desktop">
+                        <button class="menu-text-style flex items-center hover:text-primary-action transition duration-150 py-2" aria-expanded="false" aria-controls="products-menu" aria-haspopup="true">
+                            Products <i class="ph ph-caret-down ml-1 text-base"></i>
+                        </button>
+                        <div id="products-menu" class="dropdown-menu absolute left-0 mt-0 w-48 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 invisible transition duration-300 transform scale-95 origin-top-left z-50" role="menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Category A</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Category B</a>
+                             -->
+                            <!-- Nested Sub-Dropdown (Desktop) -->
+                            <!-- <div class="relative sub-dropdown-desktop">
+                                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 flex justify-between items-center" role="menuitem" aria-expanded="false" aria-haspopup="true">
+                                    More <i class="ph ph-caret-right ml-2 text-xs"></i>
+                                </a>
+                                <div class="sub-dropdown-menu absolute left-full top-0 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible transition duration-300 transform scale-95 origin-top-left z-50" role="menu">
+                                     <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Sub Item 1</a>
+                                     <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Sub Item 2</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <a href="aboutus.html" class="menu-text-style hover:text-primary-action transition duration-150" role="menuitem">About</a>
+                    <a href="contactus.html" class="menu-text-style hover:text-primary-action transition duration-150" role="menuitem">Contact Us</a>
+                </nav>
+
+                <!-- Hamburger Icon (Visible on mobile/tablet) -->
+                <button id="menu-toggle" class="lg:hidden text-menu-text focus:outline-none" aria-label="Toggle navigation menu" aria-controls="mobile-drawer" aria-expanded="false">
+                    <i class="ph ph-list text-3xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Off-Canvas Drawer Menu -->
+    <div id="mobile-drawer" class="fixed top-0 right-0 h-full w-64 bg-white shadow-2xl z-50 drawer-transition transform translate-x-full lg:hidden" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+        <div class="p-4 flex justify-end">
+            <button id="close-drawer" class="text-menu-text focus:outline-none" aria-label="Close navigation menu">
+                <i class="ph ph-x text-2xl"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-2 p-4" role="navigation">
+            <a href="index.html" class="menu-text-style over:text-primary-action transition duration-150 py-2 border-b border-gray-100">Home</a>
+            <a href="service.html" class="menu-text-style hover:text-primary-action transition duration-150 py-2 border-b border-gray-100">Services</a>
+            <a href="product.html" class="menu-text-style hover:text-primary-action transition duration-150 py-2 border-b border-gray-100">Products</a>
+            <!-- Mobile Services Dropdown -->
+            <!-- <button id="service-mobile-toggle" class="dropdown-mobile-toggle w-full text-left menu-text-style hover:text-primary-action transition duration-150 py-2 border-b border-gray-100 flex justify-between items-center">
+                Services <i class="ph ph-caret-down ml-1 text-lg"></i>
+            </button>
+            <div id="service-mobile-content" class="dropdown-mobile-content bg-gray-50/50">
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Consulting</a>
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Development</a>
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Design</a>
+            </div> -->
+
+            <!-- Mobile Products Dropdown -->
+            <!-- <button id="product-mobile-toggle" class="dropdown-mobile-toggle w-full text-left menu-text-style hover:text-primary-action transition duration-150 py-2 border-b border-gray-100 flex justify-between items-center">
+                Products <i class="ph ph-caret-down ml-1 text-lg"></i>
+            </button>
+            <div id="product-mobile-content" class="dropdown-mobile-content bg-gray-50/50">
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Category A</a>
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Category B</a>
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">More Options</a>
+            </div> -->
+
+            <a href="aboutus.html" class="menu-text-style text-primary-action transition duration-150 py-2 border-b border-gray-100">About</a>
+            <a href="contactus.html" class="menu-text-style hover:text-primary-action transition duration-150 py-2">Contact Us</a>
+        </nav>
+    </div>
+    <!-- Overlay for the drawer menu -->
+    <div id="drawer-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" aria-hidden="true"></div>
+
+    <main role="main">
+        <!-- T&C Header -->
+        <section class="bg-hero-bg py-16 sm:py-20 border-b border-gray-200" aria-labelledby="tandc-heading">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 id="tandc-heading" class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-menu-text leading-tight inline-block border-b-4 border-primary-action/50 pb-2">
+                    TERMS & CONDITIONS
+                </h1>
+                <p class="text-sm text-gray-500 mt-2">
+                    Last Updated: 15 / October / 2025
+                </p>
+            </div>
+        </section>
+
+        <!-- Main Content (Two Columns for Desktop, Stacked for Mobile) -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+            <div class="lg:grid lg:grid-cols-4 lg:gap-12">
+                
+                <!-- Left Column: Table of Contents (Sticky on Desktop) -->
+                <nav class="lg:col-span-1 mb-10 lg:mb-0" aria-label="Table of Contents">
+                    <div class="lg:sticky sticky-toc p-6 bg-white rounded-xl shadow-lg border border-gray-100">
+                        <h2 class="text-xl font-bold text-menu-text mb-4 border-b pb-2">Table of Contents</h2>
+                        <ul class="space-y-2 text-gray-600">
+                            <li><a href="#section-1" class="block hover:text-primary-action transition duration-150">1. Introduction & Acceptance</a></li>
+                            <li><a href="#section-2" class="block hover:text-primary-action transition duration-150">2. Services Provided</a></li>
+                            <li><a href="#section-3" class="block hover:text-primary-action transition duration-150">3. Quotation, Orders & Payment Terms</a></li>
+                            <li><a href="#section-4" class="block hover:text-primary-action transition duration-150">4. Quality Control & Inspection</a></li>
+                            <li><a href="#section-5" class="block hover:text-primary-action transition duration-150">5. Delivery, Shipping & Risk Transfer</a></li>
+                            <li><a href="#section-6" class="block hover:text-primary-action transition duration-150">6. Intellectual Property & Termination</a></li>
+                        </ul>
+                        <!-- Legal Contact Placeholder -->
+                        <div class="mt-6 p-4 bg-hero-bg border border-primary-action/30 rounded-lg text-center text-sm text-primary-action font-medium">
+                            Need help? Contact our legal team.
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Right Column: Detailed Content -->
+                <div class="lg:col-span-3 max-w-none">
+                    
+                    <!-- NEW: Image Section (col-6 and col-6 split) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+                        <!-- Image 1 (col-6 equivalent) -->
+                        <div class="rounded-xl overflow-hidden shadow-lg aspect-video">
+                             <img src="https://placehold.co/600x300/3E437D/FFFFFF?text=Legal+Compliance+Image+A" 
+                                  alt="Abstract image representing legal compliance" 
+                                  class="w-full h-full object-cover"
+                                  onerror="this.onerror=null; this.src='https://placehold.co/600x300/3E437D/FFFFFF?text=Legal+Compliance+Image+A'">
+                        </div>
+                        <!-- Image 2 (col-6 equivalent) -->
+                        <div class="rounded-xl overflow-hidden shadow-lg aspect-video">
+                             <img src="https://placehold.co/600x300/429255/FFFFFF?text=Legal+Framework+Image+B" 
+                                  alt="Abstract image representing ethical framework" 
+                                  class="w-full h-full object-cover"
+                                  onerror="this.onerror=null; this.src='https://placehold.co/600x300/429255/FFFFFF?text=Legal+Framework+Image+B'">
+                        </div>
+                    </div>
+
+                    <!-- Legal Text Content (wrapped in prose for styling) -->
+                    <div class="prose">
+                        
+                        <!-- 1. Introduction -->
+                        <h2 id="section-1" class="text-2xl pt-4 border-t border-gray-300">1. Introduction & Acceptance</h2>
+                        <p class="mt-4 text-lg text-gray-700">
+                            These Terms and Conditions govern your use of the Explore Co. website and all services provided by us, including but not limited to global sourcing, quality inspection, logistics, and supply chain consultation ("Services"). By accessing or using our Services, you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the Service.
+                        </p>
+                        <p>
+                            We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will try to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.
+                        </p>
+                        
+                        <!-- 2. Services Provided -->
+                        <h2 id="section-2" class="text-2xl pt-4 mt-12 border-t border-gray-300">2. Services Provided</h2>
+                        <p class="mt-4 text-lg text-gray-700">
+                            Explore Co. provides procurement, manufacturing liaison, and logistics services. While we strive for accuracy and timely delivery, we are reliant on third-party manufacturers and shipping agents. All services are subject to the specific scope defined in the corresponding Service Agreement or Statement of Work (SOW) executed between you and Explore Co.
+                        </p>
+                        <ul>
+                            <li><strong class="text-menu-text">Sourcing:</strong> We commit to using commercially reasonable efforts to identify suitable suppliers based on the specifications provided by the Client.</li>
+                            <li><strong class="text-menu-text">Consultation:</strong> Any advice provided is based on market conditions at the time of consultation and should not be considered binding guarantees.</li>
+                        </ul>
+                        <p>
+                            Explore Co. is not the manufacturer of the goods unless explicitly stated in the SOW. Our role is strictly limited to facilitating the relationship between the Client and the third-party manufacturer.
+                        </p>
+                        
+                        <!-- 3. Quotation, Orders & Payment Terms -->
+                        <h2 id="section-3" class="text-2xl pt-4 mt-12 border-t border-gray-300">3. Quotation, Orders & Payment Terms</h2>
+                        <p class="mt-4 text-lg text-gray-700">
+                            All quotations provided by Explore Co. are valid for a period of thirty (30) days from the date of issue unless otherwise noted. A binding order is established only upon the Client’s written acceptance of the quotation and the issuance of a formal Purchase Order (PO) to Explore Co.
+                        </p>
+                        <h3 class="text-xl font-semibold mt-6">Payment Schedule:</h3>
+                        <ol>
+                            <li>A deposit of thirty percent (30%) of the total order value is required upon placement of the Purchase Order.</li>
+                            <li>The remaining seventy percent (70%) balance is due upon completion of Quality Control & Inspection, and prior to the initiation of shipping (Ex-Works or equivalent).</li>
+                        </ol>
+                        <p>
+                            Failure to comply with the specified payment terms may result in delays in order fulfillment, storage fees, or termination of the Service Agreement at the discretion of Explore Co.
+                        </p>
+
+                        <!-- 4. Quality Control & Inspection -->
+                        <h2 id="section-4" class="text-2xl pt-4 mt-12 border-t border-gray-300">4. Quality Control & Inspection</h2>
+                        <p class="mt-4 text-lg text-gray-700">
+                            We undertake mandatory quality control and inspection checks according to the standards mutually agreed upon in the SOW. These inspections are typically performed at the manufacturer's facility before final payment is requested.
+                        </p>
+                        <p>
+                            The Client must notify Explore Co. of any perceived defects or discrepancies within three (3) business days following the submission of the final Inspection Report. Failure to notify within this timeframe constitutes acceptance of the goods as satisfactory.
+                        </p>
+
+                        <!-- 5. Delivery, Shipping & Risk Transfer -->
+                        <h2 id="section-5" class="text-2xl pt-4 mt-12 border-t border-gray-300">5. Delivery, Shipping & Risk Transfer</h2>
+                        <p class="mt-4 text-lg text-gray-700">
+                            Delivery dates provided are estimates only. Explore Co. is not liable for delays caused by shipping carriers, customs, force majeure events, or other unforeseen circumstances beyond our reasonable control.
+                        </p>
+                        <h3 class="text-xl font-semibold mt-6">Risk Transfer:</h3>
+                        <p>
+                            Risk of loss or damage to the goods transfers from the manufacturer to the Client upon the goods being loaded onto the initial carrier at the designated port or factory (Ex-Works or FOB, as specified in the PO). We strongly recommend that the Client procures comprehensive transit insurance covering the full value of the goods.
+                        </p>
+
+                        <!-- 6. Intellectual Property & Termination -->
+                        <h2 id="section-6" class="text-2xl pt-4 mt-12 border-t border-gray-300">6. Intellectual Property & Termination</h2>
+                        <h3 class="text-xl font-semibold mt-6">Intellectual Property:</h3>
+                        <p>
+                            All intellectual property (IP) provided by the Client for manufacturing purposes (e.g., designs, trademarks) remains the exclusive property of the Client. Explore Co. and its contracted manufacturers agree to use this IP solely for the execution of the Client’s orders and will not disclose, copy, or use the IP for any other purpose.
+                        </p>
+                        <h3 class="text-xl font-semibold mt-6">Termination:</h3>
+                        <p>
+                            Either party may terminate the Service Agreement immediately upon written notice if the other party breaches any material term of these Conditions and fails to cure such breach within thirty (30) days. In the event of Client termination for convenience, all costs incurred by Explore Co. up to the date of termination must be reimbursed immediately.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-footer-bg text-white py-16" role="contentinfo">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                <!-- Col 1: Logo & Mission -->
+                <div class="col-span-2 md:col-span-2 space-y-4">
+                    <a href="#" class="text-3xl font-bold text-primary-action" aria-label="Explore Home">
+                   <img src="./assets/img/logo.png" alt="" srcset="" width="150" height="50">
+                </a>
+                    <p class="text-sm text-gray-300">
+                        Dedicated to providing clean, clear, and world-class solutions for a better tomorrow.
+                    </p>
+                    <div class="text-sm text-gray-400 mt-6 pt-4 border-t border-gray-700">
+                        © 2025 Explore Co. All rights reserved.
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div class="space-y-3">
+                    <h4 class="text-lg font-semibold mb-2">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-primary-action transition">About Us</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Our Mission</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Careers</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Press</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Services -->
+                <div class="space-y-3">
+                    <h4 class="text-lg font-semibold mb-2">Services</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-primary-action transition">Consulting</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Development</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Design</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Marketing</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Resources & Social -->
+                <div class="space-y-3">
+                    <h4 class="text-lg font-semibold mb-2">Resources</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-primary-action transition">Blog</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Support</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">FAQs</a></li>
+                    </ul>
+                    <div class="flex space-x-4 pt-4">
+                        <a href="#" aria-label="Follow us on Facebook" class="text-gray-400 hover:text-primary-action transition"><i class="ph ph-facebook-logo text-xl"></i></a>
+                        <a href="#" aria-label="Follow us on Twitter" class="text-gray-400 hover:text-primary-action transition"><i class="ph ph-twitter-logo text-xl"></i></a>
+                        <a href="#" aria-label="Follow us on Instagram" class="text-gray-400 hover:text-primary-action transition"><i class="ph ph-instagram-logo text-xl"></i></a>
+                        <a href="#" aria-label="Connect on LinkedIn" class="text-gray-400 hover:text-primary-action transition"><i class="ph ph-linkedin-logo text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // =========================================================
+        // MOBILE DRAWER MENU LOGIC (Reused from previous files)
+        // =========================================================
+        const menuToggle = document.getElementById('menu-toggle');
+        const closeDrawer = document.getElementById('close-drawer');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+        const drawerOverlay = document.getElementById('drawer-overlay');
+
+        // Mobile Dropdown elements
+        const serviceToggle = document.getElementById('service-mobile-toggle');
+        const serviceContent = document.getElementById('service-mobile-content');
+        const productToggle = document.getElementById('product-mobile-toggle');
+        const productContent = document.getElementById('product-mobile-content');
+
+        // State for mobile menus
+        let isServiceOpen = false;
+        let isProductOpen = false;
+
+
+        function toggleDrawer(open) {
+            if (open) {
+                mobileDrawer.classList.remove('translate-x-full');
+                mobileDrawer.classList.add('translate-x-0');
+                drawerOverlay.classList.remove('hidden');
+                menuToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling background
+            } else {
+                mobileDrawer.classList.remove('translate-x-0');
+                mobileDrawer.classList.add('translate-x-full');
+                drawerOverlay.classList.add('hidden');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+                
+                // Ensure mobile dropdowns close when main menu closes
+                if (isServiceOpen) toggleMobileDropdown(serviceToggle, serviceContent, 'service');
+                if (isProductOpen) toggleMobileDropdown(productToggle, productContent, 'product');
+            }
+        }
+        
+        function toggleMobileDropdown(button, content, type) {
+            let isOpen;
+            
+            // Determine which state to toggle
+            if (type === 'service') {
+                isServiceOpen = !isServiceOpen;
+                isOpen = isServiceOpen;
+                if (isProductOpen) toggleMobileDropdown(productToggle, productContent, 'product'); // Close other
+            } else if (type === 'product') {
+                isProductOpen = !isProductOpen;
+                isOpen = isProductOpen;
+                if (isServiceOpen) toggleMobileDropdown(serviceToggle, serviceContent, 'service'); // Close other
+            }
+
+            if (isOpen) {
+                content.classList.add('open');
+                button.classList.add('open');
+            } else {
+                content.classList.remove('open');
+                button.classList.remove('open');
+            }
+        }
+
+
+        // Event Listeners for main drawer
+        menuToggle.addEventListener('click', () => toggleDrawer(true));
+        closeDrawer.addEventListener('click', () => toggleDrawer(false));
+        drawerOverlay.addEventListener('click', () => toggleDrawer(false));
+        
+        // Event Listeners for mobile dropdowns
+        serviceToggle.addEventListener('click', () => toggleMobileDropdown(serviceToggle, serviceContent, 'service'));
+        productToggle.addEventListener('click', () => toggleMobileDropdown(productToggle, productContent, 'product'));
+
+
+        // Close on Escape key (WCAG requirement)
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !mobileDrawer.classList.contains('translate-x-full')) {
+                toggleDrawer(false);
+            }
+        });
+        
+    </script>
+</body>
+</html>

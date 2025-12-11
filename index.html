@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- WCAG/GIGW Compliance: Set language and viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore - Corporate Homepage</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Icon Libraries (Phosphor Icons for modern look) -->
+    <script src="https://unpkg.com/phosphor-icons"></script>
+    
+    <!-- Custom Configuration and Styles -->
+    <style>
+        /* WCAG/GIGW: Ensure required font family is loaded and applied */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+        
+        :root {
+            --color-primary: #429255;
+            --color-menu-text: #3E437D;
+            --font-size-heading: 32px;
+            --font-weight-heading: 700;
+            --font-size-body: 16px;
+            --font-size-menu: 16px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: var(--font-size-body);
+            color: #333;
+        }
+
+        h1, h2, h3 {
+            font-size: var(--font-size-heading);
+            font-weight: 700;
+        }
+        
+        .section-heading {
+             font-size: var(--font-size-heading);
+             line-height: var(--font-size-heading); /* 36px */
+             font-weight: var(--font-weight-heading);
+        }
+
+        /* Custom utility for menu text color and size */
+        .menu-text-style {
+            color: var(--color-menu-text);
+            font-size: var(--font-size-menu); /* 20px */
+            font-weight: 500;
+        }
+        
+        /* Custom utility for primary button background */
+        .btn-primary {
+            background-color: var(--color-primary);
+            transition: background-color 0.3s;
+        }
+
+        /* Carousel specific styles */
+        .carousel-slides {
+            transition: transform 0.5s ease-in-out;
+        }
+
+        /* Off-canvas menu transition */
+        .drawer-transition {
+            transition: transform 0.3s ease-out;
+        }
+
+        /* --- DESKTOP Dropdown Visibility (Hover/Focus-Within) --- */
+        .dropdown-desktop:hover .dropdown-menu,
+        .dropdown-desktop:focus-within .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .sub-dropdown-desktop:hover .sub-dropdown-menu,
+        .sub-dropdown-desktop:focus-within .sub-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+        
+        /* --- MOBILE Dropdown Styling --- */
+        .dropdown-mobile-content {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease-out;
+        }
+        .dropdown-mobile-content.open {
+            max-height: 500px; /* Large enough to accommodate content */
+        }
+        .dropdown-mobile-toggle i {
+            transition: transform 0.3s ease-out;
+        }
+        .dropdown-mobile-toggle.open i {
+            transform: rotate(180deg);
+        }
+
+        /* Custom scrollbar for better visual on desktop, hidden on mobile */
+         #video-carousel::-webkit-scrollbar {
+            height: 6px;
+            display: none; 
+        }
+        /*
+        #video-carousel:hover::-webkit-scrollbar {
+            display: block; 
+        }
+        #video-carousel::-webkit-scrollbar-thumb {
+            background-color: #6366f1; 
+            border-radius: 9999px;
+        } */
+        /* Ensure the carousel doesn't collapse */
+        .video-card {
+            flex: 0 0 auto; /* Prevent stretching and shrinking */
+            scroll-snap-align: start;
+        }
+    </style>
+
+    <!-- Tailwind Config for custom colors and screen breakpoints -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-action': '#429255',
+                        'menu-text': '#3E437D',
+                        'footer-bg': '#2E354F',
+                        'hero-bg': '#F4FFF4',
+                    },
+                    screens: {
+                        'lg': '1024px', /* Specific breakpoint for desktop menu */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="overflow-x-hidden antialiased">
+
+    <!-- Header & Desktop Navigation (LG and up) -->
+    <header class="sticky top-0 z-40 bg-white shadow-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="text-3xl font-bold text-primary-action" aria-label="Explore Home">
+                   <img src="./assets/img/logo.png" alt="" srcset="" width="150" height="50"/>
+                </a>
+
+                <!-- Desktop Menu (Hidden on mobile/tablet) -->
+                <nav class="hidden lg:flex items-center lg:space-x-8" aria-label="Main Navigation">
+                    <a href="index.html" class="menu-text-style text-primary-action font-bold transition duration-150" role="menuitem">Home</a>
+                    <a href="service.html" class="menu-text-style hover:text-primary-action transition duration-150" role="menuitem">Services</a>
+                    <a href="product.html" class="menu-text-style hover:text-primary-action transition duration-150" role="menuitem">Products</a>
+                    
+                    <!-- Services Dropdown (Desktop) -->
+                    <!-- <div class="relative dropdown-desktop">
+                        <button class="menu-text-style flex items-center hover:text-primary-action transition duration-150 py-2" aria-expanded="false" aria-controls="services-menu" aria-haspopup="true">
+                            Services <i class="ph ph-caret-down ml-1 text-base"></i>
+                        </button>
+                        <div id="services-menu" class="dropdown-menu absolute left-0 mt-0 w-48 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 invisible transition duration-300 transform scale-95 origin-top-left z-50" role="menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Consulting</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Development</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Design</a>
+                        </div>
+                    </div> -->
+
+                    <!-- Products Dropdown (Desktop) -->
+                    <!-- <div class="relative dropdown-desktop">
+                        <button class="menu-text-style flex items-center hover:text-primary-action transition duration-150 py-2" aria-expanded="false" aria-controls="products-menu" aria-haspopup="true">
+                            Products <i class="ph ph-caret-down ml-1 text-base"></i>
+                        </button>
+                        <div id="products-menu" class="dropdown-menu absolute left-0 mt-0 w-48 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 invisible transition duration-300 transform scale-95 origin-top-left z-50" role="menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Category A</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Category B</a>
+                             -->
+                            <!-- Nested Sub-Dropdown (Desktop) -->
+                            <!-- <div class="relative sub-dropdown-desktop">
+                                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 flex justify-between items-center" role="menuitem" aria-expanded="false" aria-haspopup="true">
+                                    More <i class="ph ph-caret-right ml-2 text-xs"></i>
+                                </a>
+                                <div class="sub-dropdown-menu absolute left-full top-0 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible transition duration-300 transform scale-95 origin-top-left z-50" role="menu">
+                                     <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Sub Item 1</a>
+                                     <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Sub Item 2</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <a href="aboutus.html" class="menu-text-style hover:text-primary-action transition duration-150" role="menuitem">About</a>
+                    <a href="contactus.html" class="menu-text-style hover:text-primary-action transition duration-150" role="menuitem">Contact Us</a>
+                </nav>
+
+                <!-- Hamburger Icon (Visible on mobile/tablet) -->
+                <button id="menu-toggle" class="lg:hidden text-menu-text focus:outline-none" aria-label="Toggle navigation menu" aria-controls="mobile-drawer" aria-expanded="false">
+                    <i class="ph ph-list text-3xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Off-Canvas Drawer Menu -->
+    <div id="mobile-drawer" class="fixed top-0 right-0 h-full w-64 bg-white shadow-2xl z-50 drawer-transition transform translate-x-full lg:hidden" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+        <div class="p-4 flex justify-end">
+            <button id="close-drawer" class="text-menu-text focus:outline-none" aria-label="Close navigation menu">
+                <i class="ph ph-x text-2xl"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-2 p-4" role="navigation">
+            <a href="index.html" class="menu-text-style hover:text-primary-action transition duration-150 py-2 border-b border-gray-100">Home</a>
+            <a href="service.html" class="menu-text-style hover:text-primary-action transition duration-150 py-2 border-b border-gray-100">Services</a>
+            <a href="product.html" class="menu-text-style hover:text-primary-action transition duration-150 py-2 border-b border-gray-100">Products</a>
+            <!-- Mobile Services Dropdown -->
+            <!-- <button id="service-mobile-toggle" class="dropdown-mobile-toggle w-full text-left menu-text-style hover:text-primary-action transition duration-150 py-2 border-b border-gray-100 flex justify-between items-center">
+                Services <i class="ph ph-caret-down ml-1 text-lg"></i>
+            </button>
+            <div id="service-mobile-content" class="dropdown-mobile-content bg-gray-50/50">
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Consulting</a>
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Development</a>
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Design</a>
+            </div> -->
+
+            <!-- Mobile Products Dropdown -->
+            <!-- <button id="product-mobile-toggle" class="dropdown-mobile-toggle w-full text-left menu-text-style hover:text-primary-action transition duration-150 py-2 border-b border-gray-100 flex justify-between items-center">
+                Products <i class="ph ph-caret-down ml-1 text-lg"></i>
+            </button>
+            <div id="product-mobile-content" class="dropdown-mobile-content bg-gray-50/50">
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Category A</a>
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Category B</a>
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">More Options</a>
+            </div> -->
+
+            <a href="aboutus.html" class="menu-text-style text-primary-action transition duration-150 py-2 border-b border-gray-100">About</a>
+            <a href="contactus.html" class="menu-text-style hover:text-primary-action transition duration-150 py-2">Contact Us</a>
+        </nav>
+    </div>
+    <!-- Overlay for the drawer menu -->
+    <div id="drawer-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" aria-hidden="true"></div>
+
+    <main role="main">
+        <!-- Hero Section/Slider -->
+        <section id="hero-slider-section" class="relative overflow-hidden bg-hero-bg py-16 lg:py-24" aria-label="Homepage Carousel">
+            <div id="hero-slider" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="carousel-container relative overflow-hidden rounded-xl">
+                    <!-- Slides Wrapper (WCAG: aria-live polite for content changes) -->
+                    <div id="hero-slides" class="carousel-slides flex w-[300%] lg:w-[300%]" role="region" aria-live="polite">
+                        <!-- Slide 1 -->
+                        <div class="w-1/3 flex-shrink-0 flex items-center" role="group" aria-label="Slide 1 of 3">
+                            <div class="grid lg:grid-cols-2 gap-8 py-10 lg:py-20">
+                                <!-- Text Content -->
+                                <div class="space-y-6">
+                                    <h1 class="text-[36px] font-bold text-gray-800 leading-tight">
+                                        Lorem ipsum ornare volutpat sed risus dignissim arcu termen volutpat.
+                                    </h1>
+                                    <p class="text-[16px] text-gray-600">
+                                        Focus on Clarity, Cleanliness, and World-class standards. We deliver excellence in every project.
+                                    </p>
+                                    <div class="flex space-x-4">
+                                        <a href="#" class="btn-primary text-white text-[16px] font-medium py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300" role="button">Explore Project</a>
+                                        <a href="#" class="bg-transparent border border-primary-action text-primary-action text-[16px] font-medium py-3 px-8 rounded-lg hover:bg-primary-action hover:text-white transition duration-300" role="button">Contact Now</a>
+                                    </div>
+                                    <p class="text-sm text-gray-500 pt-4">Links: Clarity · Clean · World-class</p>
+                                </div>
+                                <!-- Image Placeholder -->
+                                <div class="hidden lg:flex justify-center items-center">
+                                    <div class="w-full h-80 bg-primary-action/10 rounded-xl flex items-center justify-center text-primary-action/50 text-xl font-bold border-4 border-primary-action/20">
+                                        Hero Image Placeholder (Slide 1)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 2 -->
+                        <div class="w-1/3 flex-shrink-0 flex items-center" role="group" aria-label="Slide 2 of 3">
+                             <div class="grid lg:grid-cols-2 gap-8 py-10 lg:py-20">
+                                <!-- Text Content -->
+                                <div class="space-y-6">
+                                    <h1 class="text-[36px] font-bold text-gray-800 leading-tight">
+                                        A powerful second slide for modern digital solutions and innovation.
+                                    </h1>
+                                    <p class="text-[16px] text-gray-600">
+                                        We specialize in cutting-edge technology and user-centric design principles.
+                                    </p>
+                                    <div class="flex space-x-4">
+                                        <a href="#" class="btn-primary text-white text-[16px] font-medium py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300" role="button">View Solutions</a>
+                                        <a href="#" class="bg-transparent border border-primary-action text-primary-action text-[16px] font-medium py-3 px-8 rounded-lg hover:bg-primary-action hover:text-white transition duration-300" role="button">Get Started</a>
+                                    </div>
+                                    <p class="text-sm text-gray-500 pt-4">Links: Tech · Design · Future</p>
+                                </div>
+                                <!-- Image Placeholder -->
+                                <div class="hidden lg:flex justify-center items-center">
+                                    <div class="w-full h-80 bg-primary-action/10 rounded-xl flex items-center justify-center text-primary-action/50 text-xl font-bold border-4 border-primary-action/20">
+                                        Hero Image Placeholder (Slide 2)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 3 -->
+                        <div class="w-1/3 flex-shrink-0 flex items-center" role="group" aria-label="Slide 3 of 3">
+                            <div class="grid lg:grid-cols-2 gap-8 py-10 lg:py-20">
+                                <!-- Text Content -->
+                                <div class="space-y-6">
+                                    <h1 class="text-[36px] font-bold text-gray-800 leading-tight">
+                                        Global reach and local expertise for your business needs.
+                                    </h1>
+                                    <p class="text-[16px] text-gray-600">
+                                        Partner with us to expand your market and optimize operational efficiency.
+                                    </p>
+                                    <div class="flex space-x-4">
+                                        <a href="#" class="btn-primary text-white text-[16px] font-medium py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300" role="button">Our Services</a>
+                                        <a href="#" class="bg-transparent border border-primary-action text-primary-action text-[16px] font-medium py-3 px-8 rounded-lg hover:bg-primary-action hover:text-white transition duration-300" role="button">Request Demo</a>
+                                    </div>
+                                    <p class="text-sm text-gray-500 pt-4">Links: Global · Local · Partner</p>
+                                </div>
+                                <!-- Image Placeholder -->
+                                <div class="hidden lg:flex justify-center items-center">
+                                    <div class="w-full h-80 bg-primary-action/10 rounded-xl flex items-center justify-center text-primary-action/50 text-xl font-bold border-4 border-primary-action/20">
+                                        Hero Image Placeholder (Slide 3)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation Dots (WCAG: Hidden from screen readers as redundant controls) -->
+                    <div id="hero-dots" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2" aria-hidden="true">
+                        <!-- Dots will be inserted by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Us Section (Differentiators) -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" aria-labelledby="why-us-heading">
+            <h2 id="why-us-heading" class="section-heading text-center mb-12">Why Us?</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
+                <!-- Differentiator 1 -->
+                <div class="flex flex-col items-center p-4">
+                    <div class="bg-primary-action/10 rounded-lg mb-3">
+                        <img src="./assets/img/suplier.png" alt="" srcset="verified experts" class=" mx-auto" />
+                        <!-- <i class="ph ph-user-check text-4xl text-primary-action"></i> -->
+                    </div>
+                    <p class="text-sm font-medium">Verified Experts</p>
+                </div>
+                <!-- Differentiator 2 -->
+                <div class="flex flex-col items-center p-4">
+                    <div class="bg-primary-action/10 rounded-lg mb-3">
+                        <img src="./assets/img/costadvantage.png" alt="" srcset="cost advantage" class="auto" />
+                    </div>
+                    <p class="text-sm font-medium">Cost Advantagese</p>
+                </div>
+                <!-- Differentiator 1 -->
+                <div class="flex flex-col items-center p-4">
+                    <div class="bg-primary-action/10 rounded-lg mb-3">
+                        <img src="./assets/img/haslefree.png" alt="" srcset="hassle free logistic" class=" mx-auto" />
+                        <!-- <i class="ph ph-user-check text-4xl text-primary-action"></i> -->
+                    </div>
+                    <p class="text-sm font-medium">Hassle Free Logistic</p>
+                </div>
+                <!-- Differentiator 1 -->
+                <div class="flex flex-col items-center p-4">
+                    <div class="bg-primary-action/10 rounded-lg mb-3">
+                        <img src="./assets/img/QC.png" alt="" srcset="reliable qc" class=" mx-auto" />
+                        <!-- <i class="ph ph-user-check text-4xl text-primary-action"></i> -->
+                    </div>
+                    <p class="text-sm font-medium">Reliable QC</p>
+                </div>
+                <!-- Differentiator 1 -->
+                <div class="flex flex-col items-center p-4">
+                    <div class="bg-primary-action/10 rounded-lg mb-3">
+                        <img src="./assets/img/transperency.png" alt="" srcset="transparency" class=" mx-auto" />
+                        <!-- <i class="ph ph-user-check text-4xl text-primary-action"></i> -->
+                    </div>
+                    <p class="text-sm font-medium">Transparency</p>
+                </div>
+               
+               
+            </div>
+        </section>
+
+        <!-- Product Categories Slider -->
+        <section id="products-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" aria-labelledby="products-heading">
+            <div class="flex justify-between items-center mb-8">
+                <h2 id="products-heading" class="section-heading">Product Categories</h2>
+                <a href="#" class="bg-transparent border border-primary-action text-primary-action text-[16px] font-medium py-3 px-8 rounded-lg hover:bg-primary-action hover:text-white transition duration-300">View all Products</a>
+            </div>
+
+            <div id="product-slider" class="relative group">
+                <!-- Navigation Arrows (WCAG: Using button roles and aria-labels) -->
+                <button id="prod-prev" class="carousel-nav-btn absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition duration-300 -ml-4" aria-label="Previous product category">
+                    <i class="ph ph-caret-left text-2xl text-menu-text"></i>
+                </button>
+                <button id="prod-next" class="carousel-nav-btn absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition duration-300 -mr-4" aria-label="Next product category">
+                    <i class="ph ph-caret-right text-2xl text-menu-text"></i>
+                </button>
+
+                <div class="carousel-container overflow-hidden rounded-xl">
+                    <!-- Slides Wrapper -->
+                    <div id="prod-slides" class="carousel-slides flex w-[150%] md:w-[200%] lg:w-[300%]" aria-live="polite">
+                        <!-- 6 Product Cards (Flex-shrink ensures single unit width) -->
+                        <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-shrink-0 p-3">
+                            <a href="#" class="block hover:shadow-xl transition duration-300 rounded-xl overflow-hidden" aria-label="View product: Bedding Set">
+                                <img src="https://placehold.co/300x200/429255/ffffff?text=Bedding+Set" alt="High-quality pink bedding set." class="w-full h-auto object-cover rounded-t-xl" onerror="this.onerror=null;this.src='https://placehold.co/300x200/429255/ffffff?text=Product+1';" />
+                                <div class="p-3 text-center bg-gray-50 rounded-b-xl">
+                                    <p class="font-medium text-[16px] text-gray-800">Bedding Set</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-shrink-0 p-3">
+                            <a href="#" class="block hover:shadow-xl transition duration-300 rounded-xl overflow-hidden" aria-label="View product: Kitchen Utensils">
+                                <img src="https://placehold.co/300x200/3E437D/ffffff?text=Kitchen+Utensils" alt="Set of modern kitchen utensils." class="w-full h-auto object-cover rounded-t-xl" onerror="this.onerror=null;this.src='https://placehold.co/300x200/3E437D/ffffff?text=Product+2';" />
+                                <div class="p-3 text-center bg-gray-50 rounded-b-xl">
+                                    <p class="font-medium text-[16px] text-gray-800">Utensils</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-shrink-0 p-3">
+                            <a href="#" class="block hover:shadow-xl transition duration-300 rounded-xl overflow-hidden" aria-label="View product: Coffee & Tea Set">
+                                <img src="https://placehold.co/300x200/429255/ffffff?text=Coffee+Set" alt="Aesthetic coffee and tea set." class="w-full h-auto object-cover rounded-t-xl" onerror="this.onerror=null;this.src='https://placehold.co/300x200/429255/ffffff?text=Product+3';" />
+                                <div class="p-3 text-center bg-gray-50 rounded-b-xl">
+                                    <p class="font-medium text-[16px] text-gray-800">Coffee Set</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-shrink-0 p-3">
+                            <a href="#" class="block hover:shadow-xl transition duration-300 rounded-xl overflow-hidden" aria-label="View product: Ceramic Bowls">
+                                <img src="https://placehold.co/300x200/3E437D/ffffff?text=Ceramic+Bowls" alt="Stack of handmade ceramic bowls." class="w-full h-auto object-cover rounded-t-xl" onerror="this.onerror=null;this.src='https://placehold.co/300x200/3E437D/ffffff?text=Product+4';" />
+                                <div class="p-3 text-center bg-gray-50 rounded-b-xl">
+                                    <p class="font-medium text-[16px] text-gray-800">Ceramic Bowls</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-shrink-0 p-3">
+                            <a href="#" class="block hover:shadow-xl transition duration-300 rounded-xl overflow-hidden" aria-label="View product: Candle Holders">
+                                <img src="https://placehold.co/300x200/429255/ffffff?text=Candle+Holders" alt="Decorative glass candle holders." class="w-full h-auto object-cover rounded-t-xl" onerror="this.onerror=null;this.src='https://placehold.co/300x200/429255/ffffff?text=Product+5';" />
+                                <div class="p-3 text-center bg-gray-50 rounded-b-xl">
+                                    <p class="font-medium text-[16px] text-gray-800">Candle Holders</p>
+                                </div>
+                            </a>
+                        </div>
+                         <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-shrink-0 p-3">
+                            <a href="#" class="block hover:shadow-xl transition duration-300 rounded-xl overflow-hidden" aria-label="View product: Storage Boxes">
+                                <img src="https://placehold.co/300x200/3E437D/ffffff?text=Storage+Boxes" alt="Stylish wooden storage boxes." class="w-full h-auto object-cover rounded-t-xl" onerror="this.onerror=null;this.src='https://placehold.co/300x200/3E437D/ffffff?text=Product+6';" />
+                                <div class="p-3 text-center bg-gray-50 rounded-b-xl">
+                                    <p class="font-medium text-[16px] text-gray-800">Storage Boxes</p>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- Duplicate set for infinite loop visual effect -->
+                        <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-shrink-0 p-3">
+                            <a href="#" class="block hover:shadow-xl transition duration-300 rounded-xl overflow-hidden" aria-label="View product: Bedding Set">
+                                <img src="https://placehold.co/300x200/429255/ffffff?text=Bedding+Set" alt="High-quality pink bedding set." class="w-full h-auto object-cover rounded-t-xl" onerror="this.onerror=null;this.src='https://placehold.co/300x200/429255/ffffff?text=Product+1';" />
+                                <div class="p-3 text-center bg-gray-50 rounded-b-xl">
+                                    <p class="font-medium text-[16px] text-gray-800">Bedding Set</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="w-1/3 md:w-1/4 lg:w-1/6 flex-shrink-0 p-3">
+                            <a href="#" class="block hover:shadow-xl transition duration-300 rounded-xl overflow-hidden" aria-label="View product: Kitchen Utensils">
+                                <img src="https://placehold.co/300x200/3E437D/ffffff?text=Kitchen+Utensils" alt="Set of modern kitchen utensils." class="w-full h-auto object-cover rounded-t-xl" onerror="this.onerror=null;this.src='https://placehold.co/300x200/3E437D/ffffff?text=Product+2';" />
+                                <div class="p-3 text-center bg-gray-50 rounded-b-xl">
+                                    <p class="font-medium text-[16px] text-gray-800">Utensils</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Process Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" aria-labelledby="process-heading">
+            <h2 id="process-heading" class="section-heading mb-12">Our Process</h2>
+            <div class="h-64 bg-gray-100 rounded-xl flex items-center justify-center text-gray-500 border border-dashed border-gray-300">
+                Placeholder for detailed process steps/timeline (as seen in image)
+            </div>
+        </section>
+
+               <!-- TESTIMONIALS CAROUSEL SECTION -->
+        <section class="mb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" aria-labelledby="youtube-heading" id="testimonials">
+            <!-- Header for Title and Navigation (Task 1: Navigation Top Right) -->
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold text-gray-900">Testimonials</h2>
+                
+                <!-- Navigation Icons (Top Right Placement) -->
+                <div class="flex space-x-3">
+                    <button onclick="prevSlide()" class="p-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-200 transition duration-150 shadow-md" aria-label="Previous Testimonial">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button onclick="nextSlide()" class="p-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-200 transition duration-150 shadow-md" aria-label="Next Testimonial">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Carousel Area -->
+            <div class="relative overflow-hidden">
+                <!-- Carousel Track - uses Flexbox to hold all cards horizontally. The transform is updated by JS -->
+                <div id="testimonial-track" class="flex transition-transform duration-500 ease-in-out">
+                    
+                    <!-- 8 Testimonial Cards (Task 2: Responsive Widths) -->
+                    <!-- w-full for 1 card view on mobile, lg:w-1/4 for 4 cards view on desktop -->
+
+                    <!-- Card 1 -->
+                    <div class="w-full lg:w-1/4 flex-shrink-0 p-3">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full">
+                            <div class="text-yellow-500 mb-2 text-xl">★★★★★</div>
+                            <p class="italic text-gray-700 mb-4">"World-class delivery. The project was completed ahead of schedule and flawlessly executed. Will use again."</p>
+                            <p class="font-semibold text-indigo-600">- Alex R.</p>
+                            <p class="text-sm text-gray-500">Industry Leader</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="w-full lg:w-1/4 flex-shrink-0 p-3">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full">
+                            <div class="text-yellow-500 mb-2 text-xl">★★★★★</div>
+                            <p class="italic text-gray-700 mb-4">"From concept to completion, the communication was clear and the results were stunning. Highly professional."</p>
+                            <p class="font-semibold text-indigo-600">- Maria S.</p>
+                            <p class="text-sm text-gray-500">Esteemed Partner</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3 -->
+                    <div class="w-full lg:w-1/4 flex-shrink-0 p-3">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full">
+                            <div class="text-yellow-500 mb-2 text-xl">★★★★★</div>
+                            <p class="italic text-gray-700 mb-4">"The best service we have ever received. They exceeded expectations in every single metric. Truly outstanding work."</p>
+                            <p class="font-semibold text-indigo-600">- John D.</p>
+                            <p class="text-sm text-gray-500">Start-up CEO</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="w-full lg:w-1/4 flex-shrink-0 p-3">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full">
+                            <div class="text-yellow-500 mb-2 text-xl">★★★★★</div>
+                            <p class="italic text-gray-700 mb-4">"Reliable, fast, and high-quality. A pleasure to work with from start to finish. Highly recommend to anyone."</p>
+                            <p class="font-semibold text-indigo-600">- Sarah P.</p>
+                            <p class="text-sm text-gray-500">Senior Manager</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 5 (Start of the second slide/view) -->
+                    <div class="w-full lg:w-1/4 flex-shrink-0 p-3">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full">
+                            <div class="text-yellow-500 mb-2 text-xl">★★★★★</div>
+                            <p class="italic text-gray-700 mb-4">"The customer support was exceptional. They quickly solved all my issues and followed up to ensure success."</p>
+                            <p class="font-semibold text-indigo-600">- Kevin M.</p>
+                            <p class="text-sm text-gray-500">E-commerce Founder</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 6 -->
+                    <div class="w-full lg:w-1/4 flex-shrink-0 p-3">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full">
+                            <div class="text-yellow-500 mb-2 text-xl">★★★★★</div>
+                            <p class="italic text-gray-700 mb-4">"Incredible value for money. The deliverables were far beyond what we initially expected. A true partnership."</p>
+                            <p class="font-semibold text-indigo-600">- Lisa H.</p>
+                            <p class="text-sm text-gray-500">Venture Capitalist</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 7 -->
+                    <div class="w-full lg:w-1/4 flex-shrink-0 p-3">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full">
+                            <div class="text-yellow-500 mb-2 text-xl">★★★★★</div>
+                            <p class="italic text-gray-700 mb-4">"Their innovative solutions helped us break into new markets. A game-changer for our business strategy."</p>
+                            <p class="font-semibold text-indigo-600">- Robert G.</p>
+                            <p class="text-sm text-gray-500">Marketing Director</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 8 -->
+                    <div class="w-full lg:w-1/4 flex-shrink-0 p-3">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full">
+                            <div class="text-yellow-500 mb-2 text-xl">★★★★★</div>
+                            <p class="italic text-gray-700 mb-4">"Smooth onboarding and integration. We were up and running in days, not weeks. Flawless execution."</p>
+                            <p class="font-semibold text-indigo-600">- Chloe A.</p>
+                            <p class="text-sm text-gray-500">Operations Head</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+                <!-- youtube CAROUSEL SECTION -->
+        <section class="mb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" aria-labelledby="youtube-heading" id="youtube-section">
+            <!-- Header for Title and Navigation (Task 1: Navigation Top Right) -->
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold text-gray-900">Testimonials</h2>
+                
+                <!-- Navigation Icons (Top Right Placement) -->
+                <div class="flex space-x-3">
+                    <button onclick="prevSlide(2)" class="p-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-200 transition duration-150 shadow-md" aria-label="Previous Testimonial">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button onclick="nextSlide2()" class="p-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-200 transition duration-150 shadow-md" aria-label="Next Testimonial">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Carousel Area -->
+            <div class="relative overflow-hidden">
+                <!-- Carousel Track - uses Flexbox to hold all cards horizontally. The transform is updated by JS -->
+                <div id="youtube-track" class="flex transition-transform duration-500 ease-in-out">
+                    
+                    <!-- 8 Testimonial Cards (Task 2: Responsive Widths) -->
+                    <!-- w-full for 1 card view on mobile, lg:w-1/4 for 4 cards view on desktop -->
+                        <div class="w-1/3 flex-shrink-0 p-3">
+                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300" aria-label="Watch video: Company Culture">
+                                <img src="https://placehold.co/600x400/3E437D/ffffff?text=Video+Thumbnail+1" alt="People gathering, representing company culture." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/3E437D/ffffff?text=Video+1';" />
+                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
+                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                        </div>
+                         <div class="w-1/3 flex-shrink-0 p-3">
+                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300" aria-label="Watch video: Product Demo">
+                                <img src="https://placehold.co/600x400/429255/ffffff?text=Video+Thumbnail+2" alt="Product demonstration in a modern setting." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/429255/ffffff?text=Video+2';" />
+                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
+                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                        </div>
+                         <div class="w-1/3 flex-shrink-0 p-3">
+                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300" aria-label="Watch video: Client Success Story">
+                                <img src="https://placehold.co/600x400/3E437D/ffffff?text=Video+Thumbnail+3" alt="Client discussing success over coffee." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/3E437D/ffffff?text=Video+3';" />
+                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
+                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="w-1/3 flex-shrink-0 p-3">
+                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300" aria-label="Watch video: Client Success Story">
+                                <img src="https://placehold.co/600x400/3E437D/ffffff?text=Video+Thumbnail+3" alt="Client discussing success over coffee." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/3E437D/ffffff?text=Video+3';" />
+                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
+                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="w-1/3 flex-shrink-0 p-3">
+                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300" aria-label="Watch video: Client Success Story">
+                                <img src="https://placehold.co/600x400/3E437D/ffffff?text=Video+Thumbnail+3" alt="Client discussing success over coffee." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/3E437D/ffffff?text=Video+3';" />
+                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
+                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="w-1/3 flex-shrink-0 p-3">
+                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300" aria-label="Watch video: Client Success Story">
+                                <img src="https://placehold.co/600x400/3E437D/ffffff?text=Video+Thumbnail+3" alt="Client discussing success over coffee." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/3E437D/ffffff?text=Video+3';" />
+                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
+                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="w-1/3 flex-shrink-0 p-3">
+                            <a href="#" class="block relative group/video rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300" aria-label="Watch video: Client Success Story">
+                                <img src="https://placehold.co/600x400/3E437D/ffffff?text=Video+Thumbnail+3" alt="Client discussing success over coffee." class="w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/3E437D/ffffff?text=Video+3';" />
+                                <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover/video:bg-opacity-10 transition duration-300">
+                                    <i class="ph ph-play-circle text-6xl text-white opacity-80 group-hover/video:text-7xl group-hover/video:opacity-100 transition duration-300" aria-hidden="true"></i>
+                                </div>
+                            </a>
+                        </div>
+
+                </div>
+            </div>
+        </section>    
+       
+        <!-- Informatives/Differentiators Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" aria-labelledby="info-heading">
+             <h2 id="info-heading" class="section-heading mb-8">Informatives/Differentiators</h2>
+             <div class="h-48 bg-gray-100 rounded-xl flex items-center justify-center text-gray-500 border border-dashed border-gray-300">
+                Placeholder for additional informative content (e.g., statistics, mission statements)
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-footer-bg text-white py-16" role="contentinfo">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                <!-- Col 1: Logo & Mission -->
+                <div class="col-span-2 md:col-span-2 space-y-4">
+                    <a href="#" class="text-3xl font-bold text-primary-action" aria-label="Explore Home">
+                   <img src="./assets/img/logo.png" alt="" srcset="" width="150" height="50">
+                </a>
+                    <p class="text-sm text-gray-300">
+                        Dedicated to providing clean, clear, and world-class solutions for a better tomorrow.
+                    </p>
+                    <div class="text-sm text-gray-400 mt-6 pt-4 border-t border-gray-700">
+                        © 2025 Explore Co. All rights reserved.
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div class="space-y-3">
+                    <h4 class="text-lg font-semibold mb-2">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-primary-action transition">About Us</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Our Mission</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Careers</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Press</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Services -->
+                <div class="space-y-3">
+                    <h4 class="text-lg font-semibold mb-2">Services</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-primary-action transition">Consulting</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Development</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Design</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Marketing</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Resources & Social -->
+                <div class="space-y-3">
+                    <h4 class="text-lg font-semibold mb-2">Resources</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-primary-action transition">Blog</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Support</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">FAQs</a></li>
+                    </ul>
+                    <div class="flex space-x-4 pt-4">
+                        <a href="#" aria-label="Follow us on Facebook" class="text-gray-400 hover:text-primary-action transition"><i class="ph ph-facebook-logo text-xl"></i></a>
+                        <a href="#" aria-label="Follow us on Twitter" class="text-gray-400 hover:text-primary-action transition"><i class="ph ph-twitter-logo text-xl"></i></a>
+                        <a href="#" aria-label="Follow us on Instagram" class="text-gray-400 hover:text-primary-action transition"><i class="ph ph-instagram-logo text-xl"></i></a>
+                        <a href="#" aria-label="Connect on LinkedIn" class="text-gray-400 hover:text-primary-action transition"><i class="ph ph-linkedin-logo text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // =========================================================
+        // MOBILE DRAWER MENU LOGIC (GIGW/WCAG Compliant)
+        // =========================================================
+        const menuToggle = document.getElementById('menu-toggle');
+        const closeDrawer = document.getElementById('close-drawer');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+        const drawerOverlay = document.getElementById('drawer-overlay');
+
+        // Mobile Dropdown elements
+        const serviceToggle = document.getElementById('service-mobile-toggle');
+        const serviceContent = document.getElementById('service-mobile-content');
+        const productToggle = document.getElementById('product-mobile-toggle');
+        const productContent = document.getElementById('product-mobile-content');
+
+        // State for mobile menus
+        let isServiceOpen = false;
+        let isProductOpen = false;
+
+
+        function toggleDrawer(open) {
+            if (open) {
+                mobileDrawer.classList.remove('translate-x-full');
+                mobileDrawer.classList.add('translate-x-0');
+                drawerOverlay.classList.remove('hidden');
+                menuToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling background
+            } else {
+                mobileDrawer.classList.remove('translate-x-0');
+                mobileDrawer.classList.add('translate-x-full');
+                drawerOverlay.classList.add('hidden');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+                
+                // Ensure mobile dropdowns close when main menu closes
+                if (isServiceOpen) toggleMobileDropdown(serviceToggle, serviceContent, 'service');
+                if (isProductOpen) toggleMobileDropdown(productToggle, productContent, 'product');
+            }
+        }
+        
+        function toggleMobileDropdown(button, content, type) {
+            let isOpen;
+            
+            // Determine which state to toggle
+            if (type === 'service') {
+                isServiceOpen = !isServiceOpen;
+                isOpen = isServiceOpen;
+                if (isProductOpen) toggleMobileDropdown(productToggle, productContent, 'product'); // Close other
+            } else if (type === 'product') {
+                isProductOpen = !isProductOpen;
+                isOpen = isProductOpen;
+                if (isServiceOpen) toggleMobileDropdown(serviceToggle, serviceContent, 'service'); // Close other
+            }
+
+            if (isOpen) {
+                content.classList.add('open');
+                button.classList.add('open');
+            } else {
+                content.classList.remove('open');
+                button.classList.remove('open');
+            }
+        }
+
+
+        // Event Listeners for main drawer
+        menuToggle.addEventListener('click', () => toggleDrawer(true));
+        closeDrawer.addEventListener('click', () => toggleDrawer(false));
+        drawerOverlay.addEventListener('click', () => toggleDrawer(false));
+        
+        // Event Listeners for mobile dropdowns
+        serviceToggle.addEventListener('click', () => toggleMobileDropdown(serviceToggle, serviceContent, 'service'));
+        productToggle.addEventListener('click', () => toggleMobileDropdown(productToggle, productContent, 'product'));
+
+
+        // Close on Escape key (WCAG requirement)
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !mobileDrawer.classList.contains('translate-x-full')) {
+                toggleDrawer(false);
+            }
+        });
+
+        // =========================================================
+        // CAROUSEL LOGIC (Looping, Autoplay, Pause-on-Hover, WCAG)
+        // =========================================================
+
+        class Carousel {
+            constructor(sliderId, slidesId, nextBtnId, prevBtnId, totalUniqueSlides, interval = 5000) {
+                this.slider = document.getElementById(sliderId);
+                this.slides = document.getElementById(slidesId);
+                this.nextBtn = nextBtnId ? document.getElementById(nextBtnId) : null;
+                this.prevBtn = prevBtnId ? document.getElementById(prevBtnId) : null;
+                this.totalUniqueSlides = totalUniqueSlides;
+                this.interval = interval;
+                this.currentIndex = 0;
+                this.timer = null;
+                this.loopSlidesInDOM = this.slides.children.length; 
+                this.init();
+            }
+
+            init() {
+                this.updateSlidePosition(false);
+                this.setupAutoplay();
+                this.setupControls();
+                this.setupHoverPause();
+            }
+
+            getVisibleSlidesCount() {
+                // Simplified logic to determine slides per view based on breakpoints and slider context
+                if (this.slider.id === 'hero-slider') return 1;
+
+                if (window.innerWidth >= 1024) { 
+                    if (this.slider.id === 'product-slider') return 6;
+                    if (this.slider.id === 'testimonial-slider') return 4;
+                    if (this.slider.id === 'youtube-slider') return 3;
+                } else if (window.innerWidth >= 768) {
+                    if (this.slider.id === 'product-slider') return 4;
+                    if (this.slider.id === 'testimonial-slider') return 2;
+                    if (this.slider.id === 'youtube-slider') return 2;
+                } else {
+                    return 1;
+                }
+                return 1;
+            }
+
+            updateSlidePosition(withTransition = true) {
+                this.slides.style.transition = withTransition ? 'transform 0.5s ease-in-out' : 'none';
+
+                let stepFraction = 1 / this.loopSlidesInDOM;
+                
+                if (this.slider.id === 'hero-slider') {
+                    stepFraction = 1 / 3;
+                }
+
+                const offset = -this.currentIndex * stepFraction * 100;
+                this.slides.style.transform = `translateX(${offset}%)`;
+            }
+
+            next() {
+                this.currentIndex++;
+                this.updateSlidePosition();
+                
+                if (this.currentIndex >= this.totalUniqueSlides) {
+                    setTimeout(() => {
+                        this.currentIndex = 0;
+                        this.updateSlidePosition(false);
+                    }, 500);
+                }
+            }
+
+            prev() {
+                 if (this.currentIndex === 0) {
+                    this.currentIndex = this.totalUniqueSlides;
+                    this.updateSlidePosition(false);
+                    
+                    setTimeout(() => {
+                        this.currentIndex--;
+                        this.updateSlidePosition();
+                    }, 50);
+                } else {
+                    this.currentIndex--;
+                    this.updateSlidePosition();
+                }
+            }
+
+            setupAutoplay() {
+                if (this.timer) clearInterval(this.timer);
+                this.timer = setInterval(() => {
+                    this.next();
+                }, this.interval);
+            }
+
+            pauseAutoplay() {
+                if (this.timer) clearInterval(this.timer);
+                this.timer = null;
+            }
+
+            startAutoplay() {
+                this.setupAutoplay();
+            }
+
+            setupControls() {
+                if (this.nextBtn) this.nextBtn.addEventListener('click', () => {
+                    this.pauseAutoplay();
+                    this.next();
+                    this.startAutoplay();
+                });
+                
+                if (this.prevBtn) this.prevBtn.addEventListener('click', () => {
+                    this.pauseAutoplay();
+                    this.prev();
+                    this.startAutoplay();
+                });
+            }
+
+            setupHoverPause() {
+                if (this.slider) {
+                    this.slider.addEventListener('mouseenter', () => this.pauseAutoplay());
+                    this.slider.addEventListener('mouseleave', () => this.startAutoplay());
+                }
+            }
+        }
+
+        let heroSlider;
+        let productSlider;
+        //let testimonialSlider;
+        //let youtubeSlider;
+
+        function initializeCarousels() {
+            // Check if carousels are already initialized to prevent duplicates
+            if (heroSlider) return; 
+
+            // 1. HERO SLIDER (3 unique slides, 1 visible)
+            heroSlider = new Carousel(
+                'hero-slider', 'hero-slides', null, null, 3, 6000
+            );
+
+            // 2. PRODUCT SLIDER (6 unique slides)
+            productSlider = new Carousel(
+                'product-slider', 'prod-slides', 'prod-next', 'prod-prev', 6, 5000 
+            );
+
+            // 3. TESTIMONIAL SLIDER (4 unique slides)
+            // testimonialSlider = new Carousel(
+            //     'testimonial-slider', 'test-slides', 'test-next', 'test-prev', 4, 5500
+            // );
+            
+            // 4. YOUTUBE SLIDER (3 unique videos)
+            //  youtubeSlider = new Carousel(
+            //     'youtube-slider', 'yt-slides', 'yt-next', 'yt-prev', 3, 6500
+            // );
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCarousels();
+            
+            // Re-run the update position on window resize to fix layout jumps
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    heroSlider.updateSlidePosition(false);
+                    productSlider.updateSlidePosition(false);
+                    //testimonialSlider.updateSlidePosition(false);
+                    //youtubeSlider.updateSlidePosition(false);
+                }, 100);
+            });
+        });
+    </script>
+    <script> 
+       const totalCards = 8; 
+        let currentSlide = 0;
+        let cardsPerView = 1; 
+
+        function getCardsPerView() {
+            // Screen width check (1024px is Tailwind's 'lg' breakpoint)
+            // TASK 2: 4 cards for desktop, 1 for mobile
+            if (window.innerWidth >= 1024) {
+                return 4; 
+            } else {
+                return 1; 
+            }
+        }
+
+        function updateCarousel() {
+            const track = document.getElementById('testimonial-track');
+            if (!track) return;
+
+            cardsPerView = getCardsPerView();
+            
+            // Calculate max index to prevent scrolling past the last card view
+            const maxSlide = totalCards - cardsPerView;
+            if (currentSlide > maxSlide) {
+                currentSlide = maxSlide;
+            }
+            
+            // Calculate the percentage to shift
+            const stepPercentage = 100 / cardsPerView;
+            const transformValue = -currentSlide * stepPercentage;
+            track.style.transform = `translateX(${transformValue}%)`;
+        }
+
+        function nextSlide() {
+            cardsPerView = getCardsPerView();
+            const maxSlide = totalCards - cardsPerView;
+            
+            if (currentSlide < maxSlide) {
+                currentSlide++;
+            } else {
+                currentSlide = 0; // Loop back to start
+            }
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            cardsPerView = getCardsPerView();
+            const maxSlide = totalCards - cardsPerView;
+
+            if (currentSlide > 0) {
+                currentSlide--;
+            } else {
+                currentSlide = maxSlide; // Loop to end
+            }
+            updateCarousel();
+        }
+
+        // Initial setup and resize listener
+        window.addEventListener('load', () => {
+            updateCarousel();
+            // Initialize hero slider and start auto-slide
+            showHeroSlide(0); 
+            setInterval(nextHeroSlide, 5000); // Auto slide every 5 seconds
+        });
+
+        window.addEventListener('resize', () => {
+            // Reset slide position when resizing to avoid visual glitches
+            currentSlide = 0; 
+            updateCarousel();
+        });
+    </script>
+ <script> 
+      const totalyoutubeCards = 8;
+let currentSlidey = 0;
+let cardsPerViewy = 1; 
+let youtubeInterval;
+const YOUTUBE_AUTOPLAY_DELAY = 5000; // 5 seconds
+
+function getCardsPerViewy() {
+    // Determine cards to show based on screen width
+    if (window.innerWidth >= 1024) {
+        return 4; 
+    } else if (window.innerWidth >= 768) {
+        return 2; // Added a tablet breakpoint for better responsiveness
+    } else {
+        return 1; 
+    }
+}
+
+function updateCarousely() {
+    const tracky = document.getElementById('youtube-track');
+    if (!tracky) return;
+
+    cardsPerViewy = getCardsPerViewy();
+    
+    // Calculate max index to prevent scrolling past the last card view
+    const maxSlidey = totalyoutubeCards - cardsPerViewy;
+    
+    // Ensure currentSlidey doesn't exceed the max boundary
+    if (currentSlidey > maxSlidey) {
+        currentSlidey = maxSlidey;
+    }
+    if (currentSlidey < 0) { // Safety check in case of resize glitch
+        currentSlidey = 0;
+    }
+    
+    // Calculate the percentage to shift (100 / items visible)
+    const stepPercentage = 100 / cardsPerViewy;
+    
+    // Calculate the total transformation based on the current slide index
+    const transformValue = -currentSlidey * stepPercentage;
+    
+    // FIX: Changed 'track.style.transform' to 'tracky.style.transform' and removed the trailing "%"
+    tracky.style.transform = `translateX(${transformValue}%)`;
+}
+
+function nextSlide2() {
+    cardsPerViewy = getCardsPerViewy();
+    // Use Math.ceil to handle cases where cardsPerViewy is a fraction (though it shouldn't be here)
+    const maxSlidey = totalyoutubeCards - cardsPerViewy;
+    
+    if (currentSlidey < maxSlidey) {
+        currentSlidey++;
+    } else {
+        currentSlidey = 0; // Loop back to start (FIXED)
+    }
+    updateCarousely();
+}
+
+function prevSlide2() {
+    cardsPerViewy = getCardsPerViewy();
+    const maxSlidey = totalyoutubeCards - cardsPerViewy;
+
+    if (currentSlidey > 0) {
+        currentSlidey--;
+    } else {
+        currentSlidey = maxSlidey; // Loop to end (FIXED)
+    }
+    updateCarousely(); // FIX: Changed 'updateCarousel' to 'updateCarousely'
+}
+
+// --- Autoplay and Interaction Handlers ---
+
+function startYoutubeAutoplay() {
+    stopYoutubeAutoplay();
+    youtubeInterval = setInterval(nextSlide2, YOUTUBE_AUTOPLAY_DELAY);
+}
+
+function stopYoutubeAutoplay() {
+    clearInterval(youtubeInterval);
+}
+
+
+// --- Initial Setup and Event Listeners ---
+
+window.addEventListener('load', () => {
+    updateCarousely();
+    
+    // Start YouTube Autoplay
+    startYoutubeAutoplay();
+
+    // The functions 'showHeroSlidey(0)' and 'setInterval(nextHeroSlide, 5000)' are for a different (Hero) slider 
+    // and cannot be called here unless those functions are defined elsewhere in your complete code. 
+    // They have been removed to prevent errors, assuming the YouTube function should run independently.
+    
+    // Add hover listeners for pause/resume
+    const carouselWrapper = document.querySelector('#youtube-section .carousel-wrapper');
+    if (carouselWrapper) {
+        carouselWrapper.addEventListener('mouseenter', stopYoutubeAutoplay);
+        carouselWrapper.addEventListener('mouseleave', startYoutubeAutoplay);
+    }
+});
+
+window.addEventListener('resize', () => {
+    // Reset slide position on resize and update view
+    currentSlidey = 0; 
+    updateCarousely();
+});
+
+// Assuming you have buttons outside this script, link them to the functions:
+// document.querySelector('#youtube-section .carousel-prev').addEventListener('click', prevSlide2);
+// document.querySelector('#youtube-section .carousel-next').addEventListener('click', nextSlide2);
+    </script>
+
+</body>
+</html>

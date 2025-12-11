@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- WCAG/GIGW Compliance: Set language and viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers - Join Our Team</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Icon Libraries (Phosphor Icons for modern look) -->
+    <script src="https://unpkg.com/phosphor-icons"></script>
+    
+    <!-- Custom Configuration and Styles -->
+    <style>
+        /* FONT IMPORT & ROOT VARIABLES */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+        
+        :root {
+            --color-primary: #429255;
+            --color-menu-text: #3E437D;
+            --font-size-body: 16px;
+            --font-size-menu: 16px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: var(--font-size-body); /* 16px base font size */
+            color: #333;
+        }
+
+        /* Default H-tags inherit from body, using responsive Tailwind classes overrides this */
+        h1, h2, h3 {
+            font-weight: 700;
+        }
+        
+        /* Custom utility for menu text color and size */
+        .menu-text-style {
+            color: var(--color-menu-text);
+            font-size: var(--font-size-menu); /* 16px */
+            font-weight: 500;
+        }
+        
+        /* Custom utility for primary button background */
+        .btn-primary {
+            background-color: var(--color-primary);
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #387c4a; /* Slightly darker green on hover */
+        }
+
+        /* Off-canvas menu transition */
+        .drawer-transition {
+            transition: transform 0.3s ease-out;
+        }
+
+        /* --- DESKTOP Dropdown Visibility (Hover/Focus-Within) --- */
+        .dropdown-desktop:hover .dropdown-menu,
+        .dropdown-desktop:focus-within .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .sub-dropdown-desktop:hover .sub-dropdown-menu,
+        .sub-dropdown-desktop:focus-within .sub-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+        
+        /* --- MOBILE Dropdown Styling --- */
+        .dropdown-mobile-content {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease-out;
+        }
+        .dropdown-mobile-content.open {
+            max-height: 500px; /* Large enough to accommodate content */
+        }
+        .dropdown-mobile-toggle i {
+            transition: transform 0.3s ease-out;
+        }
+        .dropdown-mobile-toggle.open i {
+            transform: rotate(180deg);
+        }
+        
+        /* Style for Vacancy List Item using Details/Summary */
+        .vacancy-item summary {
+            cursor: pointer;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            list-style: none; /* Hide default triangle */
+            position: relative;
+        }
+        .vacancy-item details[open] summary {
+            /* Keep border for visual separation of list items even when open */
+        }
+        
+        /* Custom Arrow Icon for Vacancy List */
+        .vacancy-item summary::after {
+            content: '\e910'; /* Phosphor caret down icon code (using a generic font family) */
+            font-family: 'phosphor-icons'; /* Assumes the loaded script registers this font */
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%) rotate(0deg);
+            transition: transform 0.3s ease-in-out;
+            color: var(--color-primary);
+        }
+        .vacancy-item details[open] summary::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+        
+        /* Fix for list-style on some browsers */
+        .vacancy-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+    </style>
+
+    <!-- Tailwind Config for custom colors and screen breakpoints -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-action': '#429255',
+                        'menu-text': '#3E437D',
+                        'footer-bg': '#2E354F',
+                        'hero-bg': '#F4FFF4',
+                    },
+                    screens: {
+                        'lg': '1024px', /* Specific breakpoint for desktop menu */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="overflow-x-hidden antialiased">
+    <!-- Header & Desktop Navigation (LG and up) -->
+    <header class="sticky top-0 z-40 bg-white shadow-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="text-3xl font-bold text-primary-action" aria-label="Explore Home">
+                   <img src="./assets/img/logo.png" alt="" srcset="" width="150" height="50"/>
+                </a>
+
+                <!-- Desktop Menu (Hidden on mobile/tablet) -->
+                <nav class="hidden lg:flex items-center lg:space-x-8" aria-label="Main Navigation">
+                    <a href="index.html" class="menu-text-style text-primary-action font-bold transition duration-150" role="menuitem">Home</a>
+                    <a href="service.html" class="menu-text-style hover:text-primary-action transition duration-150" role="menuitem">Services</a>
+                    <a href="product.html" class="menu-text-style hover:text-primary-action transition duration-150" role="menuitem">Products</a>
+                    
+                    <!-- Services Dropdown (Desktop) -->
+                    <!-- <div class="relative dropdown-desktop">
+                        <button class="menu-text-style flex items-center hover:text-primary-action transition duration-150 py-2" aria-expanded="false" aria-controls="services-menu" aria-haspopup="true">
+                            Services <i class="ph ph-caret-down ml-1 text-base"></i>
+                        </button>
+                        <div id="services-menu" class="dropdown-menu absolute left-0 mt-0 w-48 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 invisible transition duration-300 transform scale-95 origin-top-left z-50" role="menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Consulting</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Development</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Design</a>
+                        </div>
+                    </div> -->
+
+                    <!-- Products Dropdown (Desktop) -->
+                    <!-- <div class="relative dropdown-desktop">
+                        <button class="menu-text-style flex items-center hover:text-primary-action transition duration-150 py-2" aria-expanded="false" aria-controls="products-menu" aria-haspopup="true">
+                            Products <i class="ph ph-caret-down ml-1 text-base"></i>
+                        </button>
+                        <div id="products-menu" class="dropdown-menu absolute left-0 mt-0 w-48 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 invisible transition duration-300 transform scale-95 origin-top-left z-50" role="menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Category A</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Category B</a>
+                             -->
+                            <!-- Nested Sub-Dropdown (Desktop) -->
+                            <!-- <div class="relative sub-dropdown-desktop">
+                                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 flex justify-between items-center" role="menuitem" aria-expanded="false" aria-haspopup="true">
+                                    More <i class="ph ph-caret-right ml-2 text-xs"></i>
+                                </a>
+                                <div class="sub-dropdown-menu absolute left-full top-0 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible transition duration-300 transform scale-95 origin-top-left z-50" role="menu">
+                                     <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Sub Item 1</a>
+                                     <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100" role="menuitem">Sub Item 2</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <a href="aboutus.html" class="menu-text-style hover:text-primary-action transition duration-150" role="menuitem">About</a>
+                    <a href="contactus.html" class="menu-text-style hover:text-primary-action transition duration-150" role="menuitem">Contact Us</a>
+                </nav>
+
+                <!-- Hamburger Icon (Visible on mobile/tablet) -->
+                <button id="menu-toggle" class="lg:hidden text-menu-text focus:outline-none" aria-label="Toggle navigation menu" aria-controls="mobile-drawer" aria-expanded="false">
+                    <i class="ph ph-list text-3xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Off-Canvas Drawer Menu -->
+    <div id="mobile-drawer" class="fixed top-0 right-0 h-full w-64 bg-white shadow-2xl z-50 drawer-transition transform translate-x-full lg:hidden" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+        <div class="p-4 flex justify-end">
+            <button id="close-drawer" class="text-menu-text focus:outline-none" aria-label="Close navigation menu">
+                <i class="ph ph-x text-2xl"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-2 p-4" role="navigation">
+            <a href="index.html" class="menu-text-style over:text-primary-action transition duration-150 py-2 border-b border-gray-100">Home</a>
+            <a href="service.html" class="menu-text-style hover:text-primary-action transition duration-150 py-2 border-b border-gray-100">Services</a>
+            <a href="product.html" class="menu-text-style hover:text-primary-action transition duration-150 py-2 border-b border-gray-100">Products</a>
+            <!-- Mobile Services Dropdown -->
+            <!-- <button id="service-mobile-toggle" class="dropdown-mobile-toggle w-full text-left menu-text-style hover:text-primary-action transition duration-150 py-2 border-b border-gray-100 flex justify-between items-center">
+                Services <i class="ph ph-caret-down ml-1 text-lg"></i>
+            </button>
+            <div id="service-mobile-content" class="dropdown-mobile-content bg-gray-50/50">
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Consulting</a>
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Development</a>
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Design</a>
+            </div> -->
+
+            <!-- Mobile Products Dropdown -->
+            <!-- <button id="product-mobile-toggle" class="dropdown-mobile-toggle w-full text-left menu-text-style hover:text-primary-action transition duration-150 py-2 border-b border-gray-100 flex justify-between items-center">
+                Products <i class="ph ph-caret-down ml-1 text-lg"></i>
+            </button>
+            <div id="product-mobile-content" class="dropdown-mobile-content bg-gray-50/50">
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Category A</a>
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">Category B</a>
+                <a href="#" class="block px-4 py-2 text-sm text-menu-text hover:bg-gray-100 border-l-4 border-primary-action/0 hover:border-primary-action/50 transition">More Options</a>
+            </div> -->
+
+            <a href="aboutus.html" class="menu-text-style text-primary-action transition duration-150 py-2 border-b border-gray-100">About</a>
+            <a href="contactus.html" class="menu-text-style hover:text-primary-action transition duration-150 py-2">Contact Us</a>
+        </nav>
+    </div>
+    <!-- Overlay for the drawer menu -->
+    <div id="drawer-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" aria-hidden="true"></div>
+
+    <main role="main">
+        <!-- Career Banner/Hero Section -->
+        <section class="bg-hero-bg py-24 sm:py-32" aria-labelledby="career-heading">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Headline -->
+                <h1 id="career-heading" class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-menu-text leading-tight mb-4">
+                    Join Our Team. Drive Impact.
+                </h1>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-primary-action leading-tight mb-6">
+                    Build Trust. Move the World.
+                </h2>
+                <p class="text-xl sm:text-2xl text-gray-700 font-medium max-w-3xl">
+                    Help businesses grow globally. We are looking for passionate individuals ready to make a difference.
+                </p>
+            </div>
+        </section>
+
+        <!-- Current Vacancies & Application Section Container -->
+        <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24" aria-labelledby="vacancies-heading">
+            
+            <!-- Vacancy List Heading -->
+            <h2 id="vacancies-heading" class="text-3xl sm:text-4xl font-bold text-menu-text mb-12 border-b-4 border-primary-action/50 inline-block pb-1">
+                Current Vacancies
+            </h2>
+
+            <!-- Vacancy List (Interactive Accordion) -->
+            <div class="space-y-4 mb-20">
+                
+                <!-- Vacancy 1: Senior Software Engineer -->
+                <details class="vacancy-item bg-white rounded-xl shadow-md overflow-hidden border border-gray-100" open>
+                    <summary class="flex justify-between items-center text-xl font-semibold text-menu-text hover:text-primary-action transition duration-150 px-6 sm:px-8">
+                        <div>
+                            Senior Software Engineer
+                            <span class="text-sm font-medium text-gray-500 ml-3 hidden sm:inline-block">/ Full-time / Remote</span>
+                        </div>
+                    </summary>
+                    <div class="p-6 sm:p-8 pt-0 space-y-4">
+                        <p class="text-gray-700 leading-relaxed">
+                            We are seeking a seasoned Software Engineer to lead backend development for our global logistics platform. Must have 5+ years of experience with cloud-native technologies (AWS/GCP) and Python/Node.js. This is a crucial role for scaling our infrastructure.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-600 ml-4">
+                            <li>Design and implement scalable microservices.</li>
+                            <li>Mentor junior developers and participate in code reviews.</li>
+                            <li>Ensure high availability and performance of the platform.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <!-- Vacancy 2: Global Logistics Manager -->
+                <details class="vacancy-item bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                    <summary class="flex justify-between items-center text-xl font-semibold text-menu-text hover:text-primary-action transition duration-150 px-6 sm:px-8">
+                        <div>
+                            Global Logistics Manager
+                            <span class="text-sm font-medium text-gray-500 ml-3 hidden sm:inline-block">/ Full-time / New Delhi</span>
+                        </div>
+                    </summary>
+                    <div class="p-6 sm:p-8 pt-0 space-y-4">
+                        <p class="text-gray-700 leading-relaxed">
+                            We are looking for an experienced Logistics Manager to oversee all international shipping and supply chain operations. Requires 8+ years in global freight and proficiency in supply chain software.
+                        </p>
+                         <ul class="list-disc list-inside text-gray-600 ml-4">
+                            <li>Manage relationships with freight forwarders and carriers.</li>
+                            <li>Optimize global shipping routes and costs.</li>
+                            <li>Ensure compliance with international trade regulations.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <!-- Vacancy 3: Sourcing Analyst (Entry-Level) -->
+                <details class="vacancy-item bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                    <summary class="flex justify-between items-center text-xl font-semibold text-menu-text hover:text-primary-action transition duration-150 px-6 sm:px-8">
+                        <div>
+                            Sourcing Analyst
+                            <span class="text-sm font-medium text-gray-500 ml-3 hidden sm:inline-block">/ Entry-Level / Mumbai</span>
+                        </div>
+                    </summary>
+                    <div class="p-6 sm:p-8 pt-0 space-y-4">
+                        <p class="text-gray-700 leading-relaxed">
+                            Ideal for recent graduates with a strong analytical background. You will support our sourcing team, identifying and evaluating new suppliers across Asia.
+                        </p>
+                        <ul class="list-disc list-inside text-gray-600 ml-4">
+                            <li>Perform market research and supplier analysis.</li>
+                            <li>Assist in negotiation and contract management.</li>
+                            <li>Maintain the supplier database and performance metrics.</li>
+                        </ul>
+                    </div>
+                </details>
+
+            </div> <!-- End Vacancy List -->
+
+            <!-- Unified Application Form Section -->
+            <div id="application-form-section" class="pt-10">
+                <h2 class="text-3xl sm:text-4xl font-bold text-menu-text mb-6">
+                    Apply Now
+                </h2>
+                <p class="text-gray-600 mb-8">
+                    Use the form below to submit your application for any of the positions listed above.
+                </p>
+                <div class="p-8 bg-gray-50 rounded-xl shadow-lg border border-gray-200">
+                    <form action="#" method="POST" enctype="multipart/form-data" class="space-y-6">
+                        
+                        <!-- New Field: Position Applied For -->
+                        <div>
+                            <label for="app-position" class="block text-sm font-medium text-gray-700 mb-1">Position Applied For<span class="text-red-500">*</span></label>
+                            <select name="app-position" id="app-position" required
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-action focus:border-primary-action transition appearance-none bg-white">
+                                <option value="" disabled selected>Select a position...</option>
+                                <option value="Senior Software Engineer">Senior Software Engineer</option>
+                                <option value="Global Logistics Manager">Global Logistics Manager</option>
+                                <option value="Sourcing Analyst">Sourcing Analyst</option>
+                                <option value="General Submission">General Submission (Other)</option>
+                            </select>
+                            <i class="ph ph-caret-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none"></i>
+                        </div>
+
+                        <!-- Personal Details Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="app-name" class="block text-sm font-medium text-gray-700 mb-1">Full-Name<span class="text-red-500">*</span></label>
+                                <input type="text" name="app-name" id="app-name" placeholder="Full Name" required
+                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-action focus:border-primary-action transition">
+                            </div>
+                            <div>
+                                <label for="app-phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number<span class="text-red-500">*</span></label>
+                                <input type="tel" name="app-phone" id="app-phone" placeholder="Phone Number" required
+                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-action focus:border-primary-action transition">
+                            </div>
+                            <div>
+                                <label for="app-email" class="block text-sm font-medium text-gray-700 mb-1">Email<span class="text-red-500">*</span></label>
+                                <input type="email" name="app-email" id="app-email" placeholder="Email" required
+                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-action focus:border-primary-action transition">
+                            </div>
+                            <div>
+                                <label for="app-linkedin" class="block text-sm font-medium text-gray-700 mb-1">LinkedIn (Optional)</label>
+                                <input type="url" name="app-linkedin" id="app-linkedin" placeholder="LinkedIn Profile URL"
+                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-action focus:border-primary-action transition">
+                            </div>
+                        </div>
+                        
+                        <!-- CV/Resume Upload -->
+                        <div>
+                            <label for="app-resume" class="block text-sm font-medium text-gray-700 mb-1">CV/Resume<span class="text-red-500">*</span></label>
+                            <input type="file" name="app-resume" id="app-resume" required
+                                class="w-full text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-action/10 file:text-primary-action hover:file:bg-primary-action/20"/>
+                            <p class="text-xs text-gray-500 mt-1">Accepted formats: PDF, DOCX, TXT. Max file size: 5MB.</p>
+                        </div>
+
+                        <!-- Tell us about Yourself... -->
+                        <div>
+                            <label for="app-message" class="block text-sm font-medium text-gray-700 mb-1">Cover Letter/Message (Optional)</label>
+                            <textarea name="app-message" id="app-message" rows="4" placeholder="Briefly describe your relevant experience and why you want to join Explore."
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-action focus:border-primary-action transition"></textarea>
+                        </div>
+
+                        <div class="pt-4 flex justify-end">
+                            <button type="submit" class="btn-primary text-white text-base font-medium py-3 px-10 rounded-lg shadow-xl hover:bg-primary-action/90 transition duration-300 w-full md:w-auto">
+                                Submit Application
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Catch-all statement -->
+            <div class="text-center mt-20 p-8 bg-gray-100 rounded-xl">
+                <p class="text-lg text-gray-700">Don't see a role that fits? Send us your resume anyway! We are always looking for exceptional talent.</p>
+                <a href="contact.html" class="mt-4 inline-flex items-center text-primary-action font-semibold hover:underline">
+                    Contact Us Directly <i class="ph ph-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+        </section>
+
+    </main>
+
+     <!-- Footer -->
+    <footer class="bg-footer-bg text-white py-16" role="contentinfo">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                <!-- Col 1: Logo & Mission -->
+                <div class="col-span-2 md:col-span-2 space-y-4">
+                    <a href="#" class="text-3xl font-bold text-primary-action" aria-label="Explore Home">
+                   <img src="./assets/img/logo.png" alt="" srcset="" width="150" height="50">
+                </a>
+                    <p class="text-sm text-gray-300">
+                        Dedicated to providing clean, clear, and world-class solutions for a better tomorrow.
+                    </p>
+                    <div class="text-sm text-gray-400 mt-6 pt-4 border-t border-gray-700">
+                        © 2025 Explore Co. All rights reserved.
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div class="space-y-3">
+                    <h4 class="text-lg font-semibold mb-2">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-primary-action transition">About Us</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Our Mission</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Careers</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Press</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Services -->
+                <div class="space-y-3">
+                    <h4 class="text-lg font-semibold mb-2">Services</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-primary-action transition">Consulting</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Development</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Design</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Marketing</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Resources & Social -->
+                <div class="space-y-3">
+                    <h4 class="text-lg font-semibold mb-2">Resources</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-primary-action transition">Blog</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">Support</a></li>
+                        <li><a href="#" class="hover:text-primary-action transition">FAQs</a></li>
+                    </ul>
+                    <div class="flex space-x-4 pt-4">
+                        <a href="#" aria-label="Follow us on Facebook" class="text-gray-400 hover:text-primary-action transition"><i class="ph ph-facebook-logo text-xl"></i></a>
+                        <a href="#" aria-label="Follow us on Twitter" class="text-gray-400 hover:text-primary-action transition"><i class="ph ph-twitter-logo text-xl"></i></a>
+                        <a href="#" aria-label="Follow us on Instagram" class="text-gray-400 hover:text-primary-action transition"><i class="ph ph-instagram-logo text-xl"></i></a>
+                        <a href="#" aria-label="Connect on LinkedIn" class="text-gray-400 hover:text-primary-action transition"><i class="ph ph-linkedin-logo text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // =========================================================
+        // MOBILE DRAWER MENU LOGIC (GIGW/WCAG Compliant)
+        // =========================================================
+        const menuToggle = document.getElementById('menu-toggle');
+        const closeDrawer = document.getElementById('close-drawer');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+        const drawerOverlay = document.getElementById('drawer-overlay');
+
+        // Mobile Dropdown elements
+        const serviceToggle = document.getElementById('service-mobile-toggle');
+        const serviceContent = document.getElementById('service-mobile-content');
+        const productToggle = document.getElementById('product-mobile-toggle');
+        const productContent = document.getElementById('product-mobile-content');
+
+        // State for mobile menus
+        let isServiceOpen = false;
+        let isProductOpen = false;
+
+
+        function toggleDrawer(open) {
+            if (open) {
+                mobileDrawer.classList.remove('translate-x-full');
+                mobileDrawer.classList.add('translate-x-0');
+                drawerOverlay.classList.remove('hidden');
+                menuToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling background
+            } else {
+                mobileDrawer.classList.remove('translate-x-0');
+                mobileDrawer.classList.add('translate-x-full');
+                drawerOverlay.classList.add('hidden');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+                
+                // Ensure mobile dropdowns close when main menu closes
+                if (isServiceOpen) toggleMobileDropdown(serviceToggle, serviceContent, 'service');
+                if (isProductOpen) toggleMobileDropdown(productToggle, productContent, 'product');
+            }
+        }
+        
+        function toggleMobileDropdown(button, content, type) {
+            let isOpen;
+            
+            // Determine which state to toggle
+            if (type === 'service') {
+                isServiceOpen = !isServiceOpen;
+                isOpen = isServiceOpen;
+                if (isProductOpen) toggleMobileDropdown(productToggle, productContent, 'product'); // Close other
+            } else if (type === 'product') {
+                isProductOpen = !isProductOpen;
+                isOpen = isProductOpen;
+                if (isServiceOpen) toggleMobileDropdown(serviceToggle, serviceContent, 'service'); // Close other
+            }
+
+            if (isOpen) {
+                content.classList.add('open');
+                button.classList.add('open');
+            } else {
+                content.classList.remove('open');
+                button.classList.remove('open');
+            }
+        }
+
+
+        // Event Listeners for main drawer
+        menuToggle.addEventListener('click', () => toggleDrawer(true));
+        closeDrawer.addEventListener('click', () => toggleDrawer(false));
+        drawerOverlay.addEventListener('click', () => toggleDrawer(false));
+        
+        // Event Listeners for mobile dropdowns
+        serviceToggle.addEventListener('click', () => toggleMobileDropdown(serviceToggle, serviceContent, 'service'));
+        productToggle.addEventListener('click', () => toggleMobileDropdown(productToggle, productContent, 'product'));
+
+
+        // Close on Escape key (WCAG requirement)
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !mobileDrawer.classList.contains('translate-x-full')) {
+                toggleDrawer(false);
+            }
+        });
+        
+    </script>
+</body>
+</html>
