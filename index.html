@@ -1063,14 +1063,12 @@ let youtubeInterval;
 const YOUTUBE_AUTOPLAY_DELAY = 5000; // 5 seconds
 
 function getCardsPerViewy() {
-    // Determine cards to show based on screen width
     if (window.innerWidth >= 1024) {
-        return 4; 
+        return 3;
     } else if (window.innerWidth >= 768) {
-        return 2; // Added a tablet breakpoint for better responsiveness
-    } else {
-        return 1; 
+        return 2;
     }
+    return 1;
 }
 
 function updateCarousely() {
